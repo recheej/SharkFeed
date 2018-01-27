@@ -1,4 +1,4 @@
-package com.example.rechee.sharkfeed;
+package com.example.rechee.sharkfeed.MainScreen;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

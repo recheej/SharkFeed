@@ -5,9 +5,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.rechee.sharkfeed.R;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.RequestCreator;
 
 import java.util.List;
 
@@ -17,18 +20,46 @@ import java.util.List;
 
 public class PhotoListAdapter extends RecyclerView.Adapter<PhotoListAdapter.ViewHolder> {
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    private final List<Photo> photos;
+    private final Picasso picasso;
+    private OnBottomReachedListener onBottomReachedListener;
 
-        public TextView repoNameTextView;
-        public TextView repoStarsTextView;
-        public ViewHolder(View itemView) {
-            super(itemView);
-
-        }
+    public PhotoListAdapter(List<Photo> photos, Picasso picasso){
+        this.photos = photos;
+        this.picasso = picasso;
     }
 
-    public PhotoListAdapter(){
+    public PhotoListAdapter(List<Photo> photos, Picasso picasso,
+                            OnBottomReachedListener onBottomReachedListener){
+        this.photos = photos;
+        this.picasso = picasso;
+        this.onBottomReachedListener = onBottomReachedListener;
+    }
 
+    public void setOnBottomReachedListener(OnBottomReachedListener onBottomReachedListener){
+        this.onBottomReachedListener = onBottomReachedListener;
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+
+        private ImageView sharkImageView;
+        public ViewHolder(View itemView) {
+            super(itemView);
+            sharkImageView = itemView.findViewById(R.id.imageView_shark);
+        }
+
+        public void bindData(Photo photo){
+
+            final RequestCreator request = picasso.load(photo.getUrlC());
+            //for some reason the api returns widths as strings
+
+
+            if(photo.getWidthC() != null){
+                request.resize(300, 300);
+            }
+
+            request.centerCrop().into(sharkImageView);
+        }
     }
 
     @Override
@@ -43,10 +74,23 @@ public class PhotoListAdapter extends RecyclerView.Adapter<PhotoListAdapter.View
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+
+        if(position == photos.size() - 1){
+            if(this.onBottomReachedListener != null){
+                this.onBottomReachedListener.onBottomReached(position);
+            }
+        }
+
+        holder.bindData(photos.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return photos.size();
+    }
+
+    public interface OnBottomReachedListener {
+        //https://medium.com/@ayhamorfali/android-detect-when-the-recyclerview-reaches-the-bottom-43f810430e1e
+        void onBottomReached(int position);
     }
 }

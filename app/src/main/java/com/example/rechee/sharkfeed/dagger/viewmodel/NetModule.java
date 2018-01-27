@@ -15,7 +15,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 @Module
 public class NetModule {
-    private static final String FLICKR_BASE_URL = "https://api.flickr.com/services/";
+    private static final String FLICKR_BASE_URL = "https://api.flickr.com/";
 
     @Provides
     @ViewModelScope

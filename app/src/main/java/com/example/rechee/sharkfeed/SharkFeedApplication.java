@@ -1,5 +1,6 @@
 package com.example.rechee.sharkfeed;
 
+import android.app.Activity;
 import android.app.Application;
 
 import com.example.rechee.sharkfeed.dagger.application.ApplicationComponent;
@@ -21,6 +22,11 @@ public class SharkFeedApplication extends Application {
         applicationComponent = DaggerApplicationComponent.builder()
                 .applicationContextModule(new ApplicationContextModule(this))
                 .build();
+    }
+
+    public static ApplicationComponent getApplicationComponent(Activity activity){
+        SharkFeedApplication sharkFeedApplication = (SharkFeedApplication) activity.getApplicationContext();
+        return sharkFeedApplication.getApplicationComponent();
     }
 
     public ApplicationComponent getApplicationComponent() {

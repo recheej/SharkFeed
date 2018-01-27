@@ -6,6 +6,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.example.rechee.sharkfeed.MainScreen.MainViewModel;
+import com.example.rechee.sharkfeed.MainScreen.PhotoRepository;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -18,9 +19,11 @@ import dagger.Lazy;
 
 public class ViewModelFactory implements ViewModelProvider.Factory {
 
-    @Inject
-    public ViewModelFactory() {
+    private final Lazy<PhotoRepository> photoRepositoryLazy;
 
+    @Inject
+    public ViewModelFactory(Lazy<PhotoRepository> photoRepositoryLazy) {
+        this.photoRepositoryLazy = photoRepositoryLazy;
     }
 
     @NonNull
@@ -28,7 +31,7 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
 
         if(modelClass == MainViewModel.class){
-            return (T) new MainViewModel();
+            return (T) new MainViewModel(photoRepositoryLazy.get());
         }
 
         throw new RuntimeException("could not find that view model");
