@@ -95,7 +95,6 @@ public class ImageDialogFragment extends DialogFragment {
                 .plus(new ViewModelModule())
                 .inject(this);
 
-
         viewModel = ViewModelProviders.of(mainActivity).get(MainViewModel.class);
         viewModel.getError().observe(mainActivity, new Observer<Error>() {
             @Override

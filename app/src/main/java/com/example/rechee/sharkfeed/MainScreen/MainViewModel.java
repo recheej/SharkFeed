@@ -150,8 +150,6 @@ public class MainViewModel extends ViewModel {
         private void saveImage(Bitmap bitmap, File storageDirectory, String extension) {
             //https://stackoverflow.com/questions/11846108/android-saving-bitmap-to-sd-card
 
-            String root = storageDirectory.toString();
-
             if (! storageDirectory.exists()){
                 if (! storageDirectory.mkdir()){
                     error.postValue(Error.DOWNLOAD_IMAGE_FAILED);
