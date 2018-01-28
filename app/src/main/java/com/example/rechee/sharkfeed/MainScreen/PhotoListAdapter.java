@@ -1,12 +1,13 @@
 package com.example.rechee.sharkfeed.MainScreen;
 
+import android.app.Activity;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.example.rechee.sharkfeed.R;
 import com.squareup.picasso.Picasso;
@@ -20,6 +21,7 @@ import java.util.List;
 
 public class PhotoListAdapter extends RecyclerView.Adapter<PhotoListAdapter.ViewHolder> {
 
+    public static final String IMAGE_DIALOG_FRAGMENT = "ImageDialogFragment";
     private final List<Photo> photos;
     private final Picasso picasso;
     private OnBottomReachedListener onBottomReachedListener;
@@ -45,14 +47,33 @@ public class PhotoListAdapter extends RecyclerView.Adapter<PhotoListAdapter.View
         private ImageView sharkImageView;
         public ViewHolder(View itemView) {
             super(itemView);
+
             sharkImageView = itemView.findViewById(R.id.imageView_shark);
+            sharkImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                    if(position != RecyclerView.NO_POSITION){
+                        Photo photo = photos.get(position);
+
+                        FragmentManager manager = ((Activity) view.getContext()).getFragmentManager();
+
+                        String downloadUrl = photo.getUrlO();
+                        if(downloadUrl == null){
+                            downloadUrl = photo.getUrlC();
+                        }
+
+                        ImageDialogFragment.newInstance(downloadUrl, photo.getUrlN())
+                                .show(manager, IMAGE_DIALOG_FRAGMENT);
+                    }
+                }
+            });
         }
 
         public void bindData(Photo photo){
 
             final RequestCreator request = picasso.load(photo.getUrlC());
             //for some reason the api returns widths as strings
-
 
             if(photo.getWidthC() != null){
                 request.resize(300, 300);

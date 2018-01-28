@@ -2,4 +2,9 @@
     <string name="app_name">Shark Feed</string>
     <string name="generic_network_error">Network error. Please try again.</string>
     <string name="generic_error">Error. Please try again.</string>
+    <string name="image_of_shark">Image of shark</string>
+    <string name="download_this_image">Download this image.</string>
+    <string name="cannot_download">Cannot download at this time</string>
+    <string name="download_finished">Download finished.</string>
+    <string name="permission_write_storage_explanation">If you would like to download pictures shown from this app, the app requires permission to write to external storage.</string>
 </resources>

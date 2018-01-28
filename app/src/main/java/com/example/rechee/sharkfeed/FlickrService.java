@@ -12,7 +12,7 @@ import retrofit2.http.Query;
 
 public interface FlickrService {
     @GET("/services/rest/?method=flickr.photos.search&format=json&nojsoncallback=1" +
-            "&extras=url_t,url_c,url_l,url_o")
+            "&extras=url_t,url_c,url_l,url_o, url_n")
     Call<SearchResult> getSearchResult(@Query("text") String searchText,
                                        @Query("api_key") String apiKey,
                                        @Query("page") int page);

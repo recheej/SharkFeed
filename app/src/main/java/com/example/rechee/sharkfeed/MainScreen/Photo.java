@@ -47,15 +47,20 @@ public class Photo {
     @SerializedName("url_c")
     @Expose
     private String urlC;
+
+    @SerializedName("url_o")
+    @Expose
+    private String urlO;
+
     @SerializedName("height_c")
     @Expose
     private Integer heightC;
     @SerializedName("width_c")
     @Expose
     private String widthC;
-    @SerializedName("url_l")
+    @SerializedName("url_n")
     @Expose
-    private String urlL;
+    private String urlN;
     @SerializedName("height_l")
     @Expose
     private String heightL;
@@ -167,6 +172,14 @@ public class Photo {
         this.urlC = urlC;
     }
 
+    public String getUrlO() {
+        return urlO;
+    }
+
+    public void seturlO(String urlO) {
+        this.urlO = urlO;
+    }
+
     public Integer getHeightC() {
         return heightC;
     }
@@ -183,12 +196,12 @@ public class Photo {
         this.widthC = widthC;
     }
 
-    public String getUrlL() {
-        return urlL;
+    public String getUrlN() {
+        return urlN;
     }
 
-    public void setUrlL(String urlL) {
-        this.urlL = urlL;
+    public void setUrlN(String urlN) {
+        this.urlN = urlN;
     }
 
     public String getHeightL() {

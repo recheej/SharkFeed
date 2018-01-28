@@ -2,6 +2,7 @@ package com.example.rechee.sharkfeed.MainScreen;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -27,6 +28,9 @@ import java.util.List;
 import javax.inject.Inject;
 
 public class MainActivity extends AppCompatActivity implements PhotoListAdapter.OnBottomReachedListener {
+    public static final int WRITE_EXTERNAL_STORAGE_RESULT = 1;
+    public static final int READ_EXTERNAL_STORAGE_RESULT = 2;
+
     @Inject
     ViewModelFactory viewModelFactory;
     private MainViewModel viewModel;
@@ -96,17 +100,7 @@ public class MainActivity extends AppCompatActivity implements PhotoListAdapter.
                 refreshLayout.setRefreshing(false);
 
                 if(error != null){
-                    int errorID;
-                    switch (error){
-                        case GENERIC_NETWORK_ERROR:
-                            errorID = R.string.generic_network_error;
-                            break;
-                        default:
-                            errorID = R.string.generic_error;
-                    }
-
-                    Toast.makeText(MainActivity.this,
-                            errorID, Toast.LENGTH_SHORT).show();
+                    ErrorHandler.getErrorToast(MainActivity.this, error).show();
                 }
             }
         });
@@ -116,5 +110,17 @@ public class MainActivity extends AppCompatActivity implements PhotoListAdapter.
     public void onBottomReached(int position) {
         progressBar.setVisibility(View.VISIBLE);
         viewModel.updatePage();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode){
+            case MainActivity.WRITE_EXTERNAL_STORAGE_RESULT:
+
+                break;
+            case MainActivity.READ_EXTERNAL_STORAGE_RESULT:
+
+                break;
+        }
     }
 }
