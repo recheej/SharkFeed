@@ -35,6 +35,10 @@ public class ErrorHandler {
             case DOWNLOAD_IMAGE_FAILED:
                 errorID = R.string.cannot_download;
                 break;
+            case LOAD_IMAGE_FAILED:
+                errorID = R.string.load_image_failed;
+                break;
+            case GENERIC_ERROR:
             default:
                 errorID = R.string.generic_error;
         }

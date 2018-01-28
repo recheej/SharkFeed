@@ -2,6 +2,7 @@ package com.example.rechee.sharkfeed.MainScreen;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements PhotoListAdapter.
     private List<Photo> photos;
     private ProgressBar progressBar;
     private SwipeRefreshLayout refreshLayout;
+    private ImageDialogFragment dialogFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,11 +118,16 @@ public class MainActivity extends AppCompatActivity implements PhotoListAdapter.
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode){
             case MainActivity.WRITE_EXTERNAL_STORAGE_RESULT:
-
-                break;
-            case MainActivity.READ_EXTERNAL_STORAGE_RESULT:
-
-                break;
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    this.dialogFragment.writePermissionAccepted();
+                }
+            break;
         }
+    }
+
+    public void setDialogFragment(ImageDialogFragment dialogFragment) {
+        this.dialogFragment = dialogFragment;
     }
 }

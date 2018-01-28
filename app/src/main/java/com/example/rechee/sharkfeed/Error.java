@@ -6,5 +6,5 @@ package com.example.rechee.sharkfeed;
 
 public enum Error {
     GENERIC_NETWORK_ERROR,
-    DOWNLOAD_IMAGE_FAILED, GENERIC_ERROR
+    DOWNLOAD_IMAGE_FAILED, LOAD_IMAGE_FAILED, GENERIC_ERROR
 }

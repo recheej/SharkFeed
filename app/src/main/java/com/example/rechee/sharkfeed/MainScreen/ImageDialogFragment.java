@@ -30,6 +30,7 @@ import com.example.rechee.sharkfeed.SharkFeedApplication;
 import com.example.rechee.sharkfeed.ViewModelFactory;
 import com.example.rechee.sharkfeed.dagger.activity.ViewModelModule;
 import com.example.rechee.sharkfeed.dagger.viewmodel.RepositoryModule;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -55,6 +56,7 @@ public class ImageDialogFragment extends DialogFragment {
     private MainViewModel viewModel;
     private ProgressBar progressBar;
     private MainActivity mainActivity;
+    private File storageDir;
 
     public static ImageDialogFragment newInstance(String downloadImageUrl, String mediumImageUrl){
         ImageDialogFragment fragment = new ImageDialogFragment();
@@ -119,7 +121,7 @@ public class ImageDialogFragment extends DialogFragment {
                             .show();
                 }
                 else{
-                    File storageDir = new File(Environment.getExternalStoragePublicDirectory(
+                    storageDir = new File(Environment.getExternalStoragePublicDirectory(
                             Environment.DIRECTORY_PICTURES), "SharkFeed");
 
                     progressBar.setVisibility(View.VISIBLE);
@@ -167,10 +169,25 @@ public class ImageDialogFragment extends DialogFragment {
             originalImageUrl = args.getString(IMAGE_URL_DOWNLOAD);
             mediumImageUrl = args.getString(IMAGE_URL_MEDIUM);
 
+            progressBar.setVisibility(View.VISIBLE);
             Picasso.with(view.getContext()).load(mediumImageUrl)
                     .centerCrop()
                     .fit()
-                    .into(backgroundImage);
+                    .into(backgroundImage, new Callback() {
+                        @Override
+                        public void onSuccess() {
+                            progressBar.setVisibility(View.GONE);
+                        }
+
+                        @Override
+                        public void onError() {
+                            ErrorHandler.getErrorToast(mainActivity, Error.LOAD_IMAGE_FAILED).show();
+                        }
+                    });
         }
+    }
+
+    public void writePermissionAccepted() {
+        viewModel.downloadPhoto(originalImageUrl, storageDir);
     }
 }

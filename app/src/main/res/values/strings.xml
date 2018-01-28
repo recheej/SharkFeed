@@ -7,4 +7,5 @@
     <string name="cannot_download">Cannot download at this time</string>
     <string name="download_finished">Download finished.</string>
     <string name="permission_write_storage_explanation">If you would like to download pictures shown from this app, the app requires permission to write to external storage.</string>
+    <string name="load_image_failed">Failed to load image</string>
 </resources>

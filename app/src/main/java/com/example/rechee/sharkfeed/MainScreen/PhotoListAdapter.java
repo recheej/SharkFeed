@@ -63,8 +63,10 @@ public class PhotoListAdapter extends RecyclerView.Adapter<PhotoListAdapter.View
                             downloadUrl = photo.getUrlC();
                         }
 
-                        ImageDialogFragment.newInstance(downloadUrl, photo.getUrlN())
-                                .show(manager, IMAGE_DIALOG_FRAGMENT);
+                        MainActivity mainActivity = (MainActivity) view.getContext();
+                        final ImageDialogFragment fragment = ImageDialogFragment.newInstance(downloadUrl, photo.getUrlN());
+                        mainActivity.setDialogFragment(fragment);
+                        fragment.show(manager, IMAGE_DIALOG_FRAGMENT);
                     }
                 }
             });
